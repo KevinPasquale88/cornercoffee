@@ -6,42 +6,43 @@ global it.icon.cornercoffe.pojo.CoffeeChoose coffeeChoose;
 
 rule "Rules Giava"
 	salience 5
-	when $coffee:CoffeeType(body > 4.5 , bitter >= 3.5, acidity < 0.5, aroma < 2.5, sweetness > 2 && sweetness < 3)
+	when $coffee:CoffeeType(body >= 50 , bitter >= 50,  acidity < 50, aroma <= 50, sweetness <= 50)
 	then coffeeChoose.setCoffee("Giava");
 end
 
 rule "Rules India"
 	salience 5
-	when $coffee:CoffeeType(body <= 4.5 && body > 3.5 , bitter >= 3.5, acidity < 2, aroma < 2.5, sweetness > 2 && sweetness < 3)
+	when $coffee:CoffeeType(body >= 50 , bitter >= 50, acidity < 50, aroma <= 50, sweetness <= 50)
 	then coffeeChoose.setCoffee("India");
 end
 
 rule "Rules Brazil"
 	salience 5
-	when $coffee:CoffeeType(body <= 3.5 && body > 2.5 , bitter < 3.5 && bitter > 2, acidity >= 2 && acidity < 3, aroma < 3.5 && aroma >= 2.5, sweetness >= 4)
+	when $coffee:CoffeeType(body >= 50 , bitter >= 50, acidity < 50, aroma <= 50, sweetness > 50)
 	then coffeeChoose.setCoffee("Brazil");
 end
 
 rule "Rules Mexico"
 	salience 5
-	when $coffee:CoffeeType(body <= 2.5 && body > 1.5, bitter <= 2, acidity >= 3 && acidity < 3.5, aroma >= 3.5 && aroma <= 4, sweetness > 2.5 && sweetness < 3.5)
+	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness > 50)
 	then coffeeChoose.setCoffee("Mexico");
 end
 
 rule "Rules Kenya"
 	salience 5
-	when $coffee:CoffeeType(body <= 2.5 && body > 1.5, bitter <= 2, acidity >= 3.5 && acidity <= 4, aroma > 4.5, sweetness >= 3 && sweetness < 4)
+	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness > 50)
 	then coffeeChoose.setCoffee("Kenya");
 end
 
 rule "Rules Honduras"
 	salience 5
-	when $coffee:CoffeeType(body <= 2.5 && body > 1.5, bitter <= 2, acidity >= 3 && acidity < 3.5, aroma >= 3.5 && aroma <= 4, sweetness <= 2.5 && sweetness > 2)
+	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness <= 50)
 	then coffeeChoose.setCoffee("Honduras");
 end
 
 rule "Rules Etiopia"
-	when $coffee:CoffeeType(body < 1.5, bitter <= 2, acidity > 4, aroma <= 4.5 && aroma > 4, sweetness <= 2.5)
+	salience 5
+	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness <= 50)
 	then coffeeChoose.setCoffee("Etiopia");
 end
 
@@ -50,10 +51,10 @@ rule "bitter yes"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Bevi il caffè amaro", answer == "Si")
-		$coffee:CoffeeType($bi : bitter)
+		$coffee:CoffeeType($bi : bitter, $sw : sweetness)
 	then
 		modify($coffee){
-			bitter = $bi + 2;
+			bitter = $bi + 30;
 		}
 end
 
@@ -64,7 +65,7 @@ rule "bitter no"
 		$coffee:CoffeeType($bi : bitter)
 	then 
 		modify($coffee){
-			bitter = $bi + 3;
+			bitter = $bi + 50;
 		}
 end
 
@@ -72,10 +73,10 @@ rule "energy yes"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Hai bisogno di energia", answer == "Si")
-		$coffee:CoffeeType($b : body)
+		$coffee:CoffeeType($bo : body)
 	then 
 		modify($coffee){
-			body = $b + 3;
+			body = $bo + 55;
 		}
 end
 
@@ -86,7 +87,7 @@ rule "energy no"
 		$coffee:CoffeeType($b : body)
 	then 
 		modify($coffee){
-			body = $b + 1;
+			body = $bo + 30;
 		}
 end
 
@@ -94,10 +95,10 @@ rule "number coffee 1 2"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2")
-		$coffee:CoffeeType($a : aroma)
+		$coffee:CoffeeType($ar : aroma)
 	then
 		modify($coffee){
-			aroma = $a + 1;
+			aroma = $ar + 1;
 		}
 end
 
@@ -215,46 +216,6 @@ rule "with milk no"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Bevi con il latte", answer == "No")
-	then 
-		//todo
-end
-
-rule "moka tool"
-	salience 10
-	when
-		$answer:AnswerPOJO(question == "Quale strumento utilizzi per fare il caffè", answer == "Moka")
-	then 
-		//todo
-end
-
-rule "filtro tool"
-	salience 10
-	when
-		$answer:AnswerPOJO(question == "Quale strumento utilizzi per fare il caffè", answer == "Filtro")
-	then 
-		//todo
-end
-
-rule "espresso tool"
-	salience 10
-	when
-		$answer:AnswerPOJO(question == "Quale strumento utilizzi per fare il caffè", answer == "Espresso")
-	then 
-		//todo
-end
-
-rule "grani state"
-	salience 10
-	when
-		$answer:AnswerPOJO(question == "In quale stato si trova il caffè", answer == "Grani")
-	then 
-		//todo
-end
-
-rule "macinato state"
-	salience 10
-	when
-		$answer:AnswerPOJO(question == "In quale stato si trova il caffè", answer == "Macinato")
 	then 
 		//todo
 end
