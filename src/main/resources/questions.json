@@ -1,0 +1,75 @@
+[
+  {
+    "question": "Bevi il caffè amaro",
+    "answers": [
+      "Si",
+      "No"
+    ]
+  },
+  {
+    "question": "Hai bisogno di energia",
+    "answers": [
+      "Si",
+      "No"
+    ]
+  },
+  {
+    "question": "Quanti caffè bevi normalmente in un giorno",
+    "answers": [
+      "1-2",
+      "3-4",
+      "5 o +"
+    ]
+  },
+  {
+    "question": "In quale momento della giornata ci troviamo",
+    "answers": [
+      "Mattina",
+      "Pomeriggio",
+      "Sera"
+    ]
+  },
+  {
+    "question": "Ti piace molto profumato",
+    "answers": [
+      "Si",
+      "No"
+    ]
+  },
+  {
+    "question": "Ti piace più persistente",
+    "answers": [
+      "Si",
+      "No"
+    ]
+  },
+  {
+    "question": "Lo accompagni con un dolce",
+    "answers": [
+      "Si",
+      "No"
+    ]
+  },
+  {
+    "question": "Bevi con il latte",
+    "answers": [
+      "Si",
+      "No"
+    ]
+  },
+  {
+    "question": "Quale strumento utilizzi per fare il caffè",
+    "answers": [
+      "Moka",
+      "Filtro",
+      "Espresso"
+    ]
+  },
+  {
+    "question": "In quale stato si trova il caffè",
+    "answers": [
+      "Grani",
+      "Macinato"
+    ]
+  }
+]
