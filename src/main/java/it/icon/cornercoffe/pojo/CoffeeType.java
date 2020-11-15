@@ -13,14 +13,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CoffeeType {
 	
-	public Double acidity;
+	public double acidity;
 	
-	public Double aroma;
+	public double aroma;
 	
-	public Double bitter;
+	public double bitter;
 	
-	public Double body;
+	public double body;
 	
-	public Double sweetness;
+	public double sweetness;
 
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,12 @@ public class CoffeeComponent {
 			kieSession.insert(AnswerPOJO.builder().question(elem.getKey()).answer(elem.getValue()).build());
 		}
 		kieSession.insert(new CoffeeType());
-		kieSession.fireAllRules();
-		kieSession.dispose();
+		try {
+			kieSession.fireAllRules();
+			kieSession.dispose();			
+		}catch (Exception ex) {
+			log.error(ExceptionUtils.getMessage(ex));
+		}
 		if (StringUtils.isNotBlank(coffeeChoose.getCoffee())) {
 			log.info("FIND ! ! ! - coffee {}", coffeeChoose.getCoffee());
 			return coffeeChoose.getCoffee();

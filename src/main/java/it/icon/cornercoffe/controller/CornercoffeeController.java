@@ -110,6 +110,7 @@ public class CornercoffeeController {
 			if (nextQuestionElement != null) {
 				return ResponseEntity.ok(ResponseCoffee.builder().nextQuestion(nextQuestionElement).build());
 			} else {
+				log.error("Error on build response . . .");
 				return new ResponseEntity<ResponseCoffee>(HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 		}
