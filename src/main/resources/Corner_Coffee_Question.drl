@@ -84,7 +84,7 @@ rule "energy no"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Hai bisogno di energia", answer == "No")
-		$coffee:CoffeeType($b : body)
+		$coffee:CoffeeType($bo : body)
 	then 
 		modify($coffee){
 			body = $bo + 30;
@@ -106,10 +106,10 @@ rule "number coffee 3 4"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4")
-		$coffee:CoffeeType($a : aroma)
+		$coffee:CoffeeType($ar : aroma)
 	then 
 		modify($coffee){
-			aroma = $a + 2;
+			aroma = $ar + 2;
 		}
 end
 
@@ -117,10 +117,10 @@ rule "number coffee 5 o"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "5 o +")
-		$coffee:CoffeeType($a : aroma)
+		$coffee:CoffeeType($ar : aroma)
 	then 
 		modify($coffee){
-			aroma = $a + 3;
+			aroma = $ar + 3;
 		}
 	end
 
@@ -128,10 +128,10 @@ rule "morning moment"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina")
-		$coffee:CoffeeType($s : sweetness)
+		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $s + 3;
+			sweetness = $sw + 3;
 		}
 end
 
@@ -139,10 +139,10 @@ rule "afternoon moment"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio")
-		$coffee:CoffeeType($s : sweetness)
+		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $s + 2;
+			sweetness = $sw + 2;
 		}
 end
 
@@ -150,10 +150,10 @@ rule "night moment"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Sera")
-		$coffee:CoffeeType($s : sweetness)
+		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $s + 1;
+			sweetness = $sw + 1;
 		}end
 
 rule "more smell yes"
