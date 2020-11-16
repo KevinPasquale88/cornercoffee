@@ -99,10 +99,10 @@ rule "number coffee 1 2"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2")
-		$coffee:CoffeeType($ar : aroma)
+		$coffee:CoffeeType($bo : body)
 	then
 		modify($coffee){
-			aroma = $ar + 1;
+			body = $bo + 30;
 		}
 		retract($answer);
 end
@@ -111,10 +111,10 @@ rule "number coffee 3 4"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4")
-		$coffee:CoffeeType($ar : aroma)
+		$coffee:CoffeeType($bo : body)
 	then 
 		modify($coffee){
-			aroma = $ar + 2;
+			body = $bo + 30;
 		}
 		retract($answer);
 end
@@ -123,10 +123,10 @@ rule "number coffee 5 o"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "5 o +")
-		$coffee:CoffeeType($ar : aroma)
+		$coffee:CoffeeType($bo : body)
 	then 
 		modify($coffee){
-			aroma = $ar + 3;
+			body = $bo + 30;
 		}
 		retract($answer);
 end
@@ -138,7 +138,7 @@ rule "morning moment"
 		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $sw + 3;
+			sweetness = $sw + 30;
 		}
 		retract($answer);
 end
@@ -150,7 +150,7 @@ rule "afternoon moment"
 		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $sw + 2;
+			sweetness = $sw + 20;
 		}
 		retract($answer);
 end
@@ -162,7 +162,7 @@ rule "night moment"
 		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $sw + 1;
+			sweetness = $sw + 10;
 		}
 		retract($answer);
 end
@@ -171,8 +171,11 @@ rule "more smell yes"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Ti piace molto profumato", answer == "Si")
+		$coffee:CoffeeType($ar : aroma)
 	then 
-		//todo
+		modify($coffee){
+			aroma = $ar + 30;
+		}
 		retract($answer);
 end
 
@@ -180,8 +183,11 @@ rule "more smell no"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Ti piace molto profumato", answer == "No")
+		$coffee:CoffeeType($ar : aroma)
 	then 
-		//todo
+		modify($coffee){
+			aroma = $ar + 20;
+		}
 		retract($answer);
 end
 
@@ -189,8 +195,11 @@ rule "persistent yes"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Ti piace più persistente", answer == "Si")
+		$coffee:CoffeeType($ar : aroma)
 	then 
-		//todo
+		modify($coffee){
+			aroma = $ar + 40;
+		}
 		retract($answer);
 end
 
@@ -198,8 +207,11 @@ rule "persistent no"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Ti piace più persistente", answer == "No")
+		$coffee:CoffeeType($ar : aroma)
 	then 
-		//todo
+		modify($coffee){
+			aroma = $ar + 20;
+		}
 		retract($answer);
 end
 
@@ -207,8 +219,11 @@ rule "with sweet yes"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Lo accompagni con un dolce", answer == "Si")
+		$coffee:CoffeeType($sw : sweetness)
 	then 
-		//todo
+		modify($coffee){
+			sweetness = $sw + 10;
+		}
 		retract($answer);
 end
 
@@ -216,8 +231,11 @@ rule "with sweet no"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Lo accompagni con un dolce", answer == "No")
+		$coffee:CoffeeType($sw : sweetness)
 	then 
-		//todo
+		modify($coffee){
+			sweetness = $sw + 10;
+		}
 		retract($answer);
 end
 
@@ -225,8 +243,11 @@ rule "with milk yes"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Bevi con il latte", answer == "Si")
+		$coffee:CoffeeType($ac : acidity)
 	then 
-		//todo
+		modify($coffee){
+			acidity = $ac + 40;
+		}
 		retract($answer);
 end
 
@@ -234,7 +255,70 @@ rule "with milk no"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Bevi con il latte", answer == "No")
+		$coffee:CoffeeType($ac : acidity)
 	then 
-		//todo
+		modify($coffee){
+			acidity = $ac + 20;
+		}
+		retract($answer);
+end
+
+rule "coffee state grani"
+	salience 10
+	when
+		$answer:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani")
+		$coffee:CoffeeType($ac : acidity)
+	then 
+		modify($coffee){
+			acidity = $ac + 40;
+		}
+		retract($answer);
+end
+
+rule "coffee state macinato"
+	salience 10
+	when
+		$answer:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Macinato")
+		$coffee:CoffeeType($ac : acidity)
+	then 
+		modify($coffee){
+			acidity = $ac + 20;
+		}
+		retract($answer);
+end
+
+rule "coffee make tool moka"
+	salience 10
+	when
+		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka")
+		$coffee:CoffeeType($bi : bitter)
+	then
+		modify($coffee){
+			bitter = $bi + 10;
+		}
+		retract($answer);
+end
+
+rule "coffee make tool espresso"
+	salience 10
+	when
+		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso")
+		$coffee:CoffeeType($bi : bitter)
+	then
+		modify($coffee){
+			bitter = $bi + 30;
+		}
+		retract($answer);
+end
+
+rule "coffee make tool filtro"
+	salience 10
+	when
+		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Filtro")
+		$coffee:CoffeeType($bi : bitter)
+	then
+		modify($coffee){
+			bitter = $bi + 20;
+		}
 		retract($answer);
 end
