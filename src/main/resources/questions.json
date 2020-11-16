@@ -56,5 +56,20 @@
       "Si",
       "No"
     ]
+  },
+  {
+    "question": "Quale strumento utilizzi per il caffè",
+    "answers": [
+      "Moka",
+      "Filtro",
+      "Espresso"
+    ]
+  },
+  {
+    "question": "In che stato si trova il caffè",
+    "answers": [
+      "Grani",
+      "Macinatos"
+    ]
   }
 ]

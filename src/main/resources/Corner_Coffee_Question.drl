@@ -51,7 +51,7 @@ rule "bitter yes"
 	salience 10
 	when
 		$answer:AnswerPOJO(question == "Bevi il caffè amaro", answer == "Si")
-		$coffee:CoffeeType($bi : bitter, $sw : sweetness)
+		$coffee:CoffeeType($bi : bitter)
 	then
 		modify($coffee){
 			bitter = $bi + 30;
