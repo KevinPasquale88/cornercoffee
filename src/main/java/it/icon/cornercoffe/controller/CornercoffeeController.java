@@ -81,7 +81,7 @@ public class CornercoffeeController {
 				.filter(elem -> StringUtils.equalsIgnoreCase(elem.getQuestion(), question)).findAny();
 		if (!questionOption.isPresent()) {
 			log.error("ERROR ON QUESTION TO PASS . . . ");
-			return new ResponseEntity<ResponseCoffee>(HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<ResponseCoffee>(HttpStatus.NOT_FOUND);
 		} else {
 			log.info("Question finded . . .");
 			QuestionPOJO elemQuestion = questionOption.get();
@@ -94,7 +94,7 @@ public class CornercoffeeController {
 			}
 			if (!find) {
 				log.error("ERROR ON ANSWER TO PASS . . . ");
-				return new ResponseEntity<ResponseCoffee>(HttpStatus.UNPROCESSABLE_ENTITY);
+				return new ResponseEntity<ResponseCoffee>(HttpStatus.NOT_FOUND);
 			} else {
 				log.info("Also Answer finded . . .");
 				answers.put(elemQuestion.getQuestion(), answer);
