@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import it.icon.cornercoffe.component.CoffeeComponent;
 import it.icon.cornercoffe.pojo.CoffeeType;
+import it.icon.cornercoffe.pojo.JSONString;
 import it.icon.cornercoffe.pojo.QuestionPOJO;
-import it.icon.cornercoffe.pojo.ResponseCoffee;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -47,7 +50,7 @@ public class CornercoffeeController {
 	CoffeeComponent coffeeComponent;
 
 	@GetMapping("/Description")
-	public ResponseEntity<String> getDescription(@RequestParam("coffeeName") String coffeeName) {
+	public ResponseEntity<String> getDescription(@RequestParam("coffeeName") String coffeeName) throws JsonProcessingException {
 		log.info("METHOD getDescription - PATH GET /Description ATTRIBUTE - {}", coffeeName);
 		StringBuilder contentBuilder = new StringBuilder();
 		String filePath = "src/main/resources/coffeeDescription/"
@@ -56,9 +59,9 @@ public class CornercoffeeController {
 			stream.forEach(s -> contentBuilder.append(s).append("\n"));
 		} catch (IOException e) {
 			log.error("Error on read {}", filePath);
-			return new ResponseEntity<String>("Error on read description about " + coffeeName, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(JSONString.builder().result("Error on read description about " + coffeeName).build()), HttpStatus.BAD_REQUEST);
 		}
-		return ResponseEntity.ok(contentBuilder.toString());
+		return ResponseEntity.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(contentBuilder.toString()).build()));
 	}
 
 	@GetMapping("/AvailabilityCoffee")
@@ -74,14 +77,15 @@ public class CornercoffeeController {
 	}
 
 	@PostMapping("/SubmitAnswer")
-	public ResponseEntity<ResponseCoffee> submitAnswer(@RequestParam("question") String question,
-			@RequestParam("answer") String answer) {
+	public ResponseEntity<String> submitAnswer(@RequestParam("question") String question,
+			@RequestParam("answer") String answer) throws JsonProcessingException {
+		
 		log.info("METHOD submitAnswer - questions {} - answer {}", question, answer);
 		Optional<QuestionPOJO> questionOption = questions.stream()
 				.filter(elem -> StringUtils.equalsIgnoreCase(elem.getQuestion(), question)).findAny();
 		if (!questionOption.isPresent()) {
 			log.error("ERROR ON QUESTION TO PASS . . . ");
-			return new ResponseEntity<ResponseCoffee>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(JSONString.builder().result("ERROR ON QUESTION TO PASS . . . ").build()), HttpStatus.NOT_FOUND);
 		} else {
 			log.info("Question finded . . .");
 			QuestionPOJO elemQuestion = questionOption.get();
@@ -94,7 +98,7 @@ public class CornercoffeeController {
 			}
 			if (!find) {
 				log.error("ERROR ON ANSWER TO PASS . . . ");
-				return new ResponseEntity<ResponseCoffee>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(JSONString.builder().result("ERROR ON ANSWER TO PASS . . . ").build()), HttpStatus.NOT_FOUND);
 			} else {
 				log.info("Also Answer finded . . .");
 				answers.put(elemQuestion.getQuestion(), answer);
@@ -103,16 +107,22 @@ public class CornercoffeeController {
 			}
 		}
 		String coffeeChoose = coffeeComponent.getCoffeeChoose(answers);
+
 		if (StringUtils.isNotBlank(coffeeChoose)) {
-			return ResponseEntity.ok(ResponseCoffee.builder().coffeeChoose(coffeeChoose).build());
+			return ResponseEntity.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(coffeeChoose).build()));
 		} else {
-			QuestionPOJO nextQuestionElement = coffeeComponent.getNextQuestion(questions);
-			if (nextQuestionElement != null) {
-				return ResponseEntity.ok(ResponseCoffee.builder().nextQuestion(nextQuestionElement).build());
-			} else {
-				log.error("Error on build response . . .");
-				return new ResponseEntity<ResponseCoffee>(HttpStatus.UNPROCESSABLE_ENTITY);
-			}
+			return ResponseEntity.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result("Nothing.").build()));
+		}
+	}
+
+	@GetMapping("/Question")
+	public ResponseEntity<QuestionPOJO> getQuestion() {
+		QuestionPOJO nextQuestionElement = coffeeComponent.getNextQuestion(questions);
+		if (nextQuestionElement != null) {
+			return ResponseEntity.ok(nextQuestionElement);
+		} else {
+			log.error("Error on build response . . .");
+			return new ResponseEntity<QuestionPOJO>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
 }
