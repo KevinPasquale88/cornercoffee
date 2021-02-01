@@ -1,9 +1,6 @@
 package it.icon.cornercoffe.component;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -12,7 +9,6 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import it.icon.cornercoffe.pojo.AnswerPOJO;
 import it.icon.cornercoffe.pojo.CoffeeChoose;
 import it.icon.cornercoffe.pojo.CoffeeType;
 import it.icon.cornercoffe.pojo.QuestionPOJO;
@@ -24,11 +20,12 @@ public class CoffeeComponent {
 
 	@Autowired
 	KieContainer kContainer;
-	
+
+	CoffeeChoose coffeeChoose = new CoffeeChoose();
+
 	public QuestionPOJO getNextQuestion(List<QuestionPOJO> questions) {
 		log.info("METHOD getNextQuestion - questions size {}", questions.size());
 		if (!questions.isEmpty()) {
-			Collections.shuffle(questions);
 			QuestionPOJO nextQuestion = questions.get(0);
 			log.info("nextQuestion {}", nextQuestion);
 			return nextQuestion;
@@ -37,20 +34,16 @@ public class CoffeeComponent {
 			return null;
 		}
 	}
-	
-	public String getCoffeeChoose(Map<String, String> answers) {
-		log.info("METHOD getCoffeeChoose - answers size {}", answers.size());
+
+	public String getCoffeeChoose(CoffeeType coffeeType) {
+		log.info("METHOD getCoffeeChoose - coffeeType {}", coffeeType.toString());
 		KieSession kieSession = kContainer.newKieSession();
-		CoffeeChoose coffeeChoose = new CoffeeChoose();
 		kieSession.setGlobal("coffeeChoose", coffeeChoose);
-		for (Entry<String, String> elem : answers.entrySet()) {
-			kieSession.insert(AnswerPOJO.builder().question(elem.getKey()).answer(elem.getValue()).build());
-		}
-		kieSession.insert(new CoffeeType());
+		kieSession.insert(coffeeType);
 		try {
 			kieSession.fireAllRules();
-			kieSession.dispose();			
-		}catch (Exception ex) {
+			kieSession.dispose();
+		} catch (Exception ex) {
 			log.error(ExceptionUtils.getMessage(ex));
 		}
 		if (StringUtils.isNotBlank(coffeeChoose.getCoffee())) {
@@ -60,5 +53,10 @@ public class CoffeeComponent {
 			log.info("Informazioni mancanti per il calcolo . . .");
 			return null;
 		}
+	}
+
+	public String getBlend() {
+		return new StringBuilder("Miscela percentuali Arabica :").append(coffeeChoose.getPercentageArabica())
+				.append("%").append(" Robusta :").append(coffeeChoose.getPercentageRobusta()).append("%").toString();
 	}
 }

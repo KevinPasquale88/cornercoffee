@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,6 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import it.icon.cornercoffe.component.CoffeeComponent;
+import it.icon.cornercoffe.component.QuestionComponent;
 import it.icon.cornercoffe.pojo.CoffeeType;
 import it.icon.cornercoffe.pojo.JSONString;
 import it.icon.cornercoffe.pojo.QuestionPOJO;
@@ -44,24 +44,33 @@ public class CornercoffeeController {
 	@Autowired
 	List<QuestionPOJO> questions;
 
-	Map<String, String> answers = new HashMap<>();
-
 	@Autowired
 	CoffeeComponent coffeeComponent;
 
+	@Autowired
+	QuestionComponent questionComponent;
+
 	@GetMapping("/Description")
-	public ResponseEntity<String> getDescription(@RequestParam("coffeeName") String coffeeName) throws JsonProcessingException {
+	public ResponseEntity<String> getDescription(@RequestParam("coffeeName") String coffeeName)
+			throws JsonProcessingException {
 		log.info("METHOD getDescription - PATH GET /Description ATTRIBUTE - {}", coffeeName);
 		StringBuilder contentBuilder = new StringBuilder();
+		if(StringUtils.contains(coffeeName, "%")) {
+			coffeeName = "Miscela";
+		}
 		String filePath = "src/main/resources/coffeeDescription/"
 				+ StringUtils.capitalize(StringUtils.lowerCase(coffeeName)) + ".txt";
 		try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
 			stream.forEach(s -> contentBuilder.append(s).append("\n"));
 		} catch (IOException e) {
 			log.error("Error on read {}", filePath);
-			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(JSONString.builder().result("Error on read description about " + coffeeName).build()), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(
+					new ObjectMapper().writeValueAsString(
+							JSONString.builder().result("Error on read description about " + coffeeName).build()),
+					HttpStatus.BAD_REQUEST);
 		}
-		return ResponseEntity.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(contentBuilder.toString()).build()));
+		return ResponseEntity.ok(
+				new ObjectMapper().writeValueAsString(JSONString.builder().result(contentBuilder.toString()).build()));
 	}
 
 	@GetMapping("/AvailabilityCoffee")
@@ -79,13 +88,18 @@ public class CornercoffeeController {
 	@PostMapping("/SubmitAnswer")
 	public ResponseEntity<String> submitAnswer(@RequestParam("question") String question,
 			@RequestParam("answer") String answer) throws JsonProcessingException {
-		
 		log.info("METHOD submitAnswer - questions {} - answer {}", question, answer);
+
 		Optional<QuestionPOJO> questionOption = questions.stream()
 				.filter(elem -> StringUtils.equalsIgnoreCase(elem.getQuestion(), question)).findAny();
+		CoffeeType coffeeType = null;
+
 		if (!questionOption.isPresent()) {
 			log.error("ERROR ON QUESTION TO PASS . . . ");
-			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(JSONString.builder().result("ERROR ON QUESTION TO PASS . . . ").build()), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(
+					new ObjectMapper().writeValueAsString(
+							JSONString.builder().result("ERROR ON QUESTION TO PASS . . . ").build()),
+					HttpStatus.NOT_FOUND);
 		} else {
 			log.info("Question finded . . .");
 			QuestionPOJO elemQuestion = questionOption.get();
@@ -98,20 +112,35 @@ public class CornercoffeeController {
 			}
 			if (!find) {
 				log.error("ERROR ON ANSWER TO PASS . . . ");
-				return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(JSONString.builder().result("ERROR ON ANSWER TO PASS . . . ").build()), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<String>(
+						new ObjectMapper().writeValueAsString(
+								JSONString.builder().result("ERROR ON ANSWER TO PASS . . . ").build()),
+						HttpStatus.NOT_FOUND);
 			} else {
 				log.info("Also Answer finded . . .");
-				answers.put(elemQuestion.getQuestion(), answer);
+				coffeeType = questionComponent.checkAnswers(elemQuestion.getQuestion(), answer);
 				// need to remove questionPojo
 				questions.remove(questionOption.get());
 			}
 		}
-		String coffeeChoose = coffeeComponent.getCoffeeChoose(answers);
+		if (coffeeType == null) {
+			return new ResponseEntity<String>(
+					new ObjectMapper().writeValueAsString(
+							JSONString.builder().result("ERROR ON BUILD COFFEETYPE . . . ").build()),
+					HttpStatus.NOT_FOUND);
+		}
+		String coffeeChoose = coffeeComponent.getCoffeeChoose(coffeeType);
 
 		if (StringUtils.isNotBlank(coffeeChoose)) {
-			return ResponseEntity.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(coffeeChoose).build()));
+			return ResponseEntity
+					.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(coffeeChoose).build()));
+		} else if (questions.isEmpty()) {
+			String blend = coffeeComponent.getBlend();
+			log.info("Don't found a specific type of coffee but a blend of this - blend {}", blend);
+			return ResponseEntity.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(blend).build()));
 		} else {
-			return ResponseEntity.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result("Nothing.").build()));
+			return ResponseEntity
+					.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result("Nothing.").build()));
 		}
 	}
 
