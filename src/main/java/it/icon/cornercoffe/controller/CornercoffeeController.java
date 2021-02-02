@@ -146,7 +146,7 @@ public class CornercoffeeController {
 
 	@GetMapping("/Question")
 	public ResponseEntity<QuestionPOJO> getQuestion() {
-		QuestionPOJO nextQuestionElement = coffeeComponent.getNextQuestion(questions);
+		QuestionPOJO nextQuestionElement = questionComponent.getNextQuestion(questions);
 		if (nextQuestionElement != null) {
 			return ResponseEntity.ok(nextQuestionElement);
 		} else {

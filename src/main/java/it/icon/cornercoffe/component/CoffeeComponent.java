@@ -1,7 +1,5 @@
 package it.icon.cornercoffe.component;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.kie.api.runtime.KieContainer;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import it.icon.cornercoffe.pojo.CoffeeChoose;
 import it.icon.cornercoffe.pojo.CoffeeType;
-import it.icon.cornercoffe.pojo.QuestionPOJO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -22,18 +19,6 @@ public class CoffeeComponent {
 	KieContainer kContainer;
 
 	CoffeeChoose coffeeChoose = new CoffeeChoose();
-
-	public QuestionPOJO getNextQuestion(List<QuestionPOJO> questions) {
-		log.info("METHOD getNextQuestion - questions size {}", questions.size());
-		if (!questions.isEmpty()) {
-			QuestionPOJO nextQuestion = questions.get(0);
-			log.info("nextQuestion {}", nextQuestion);
-			return nextQuestion;
-		} else {
-			log.error("FINISH questions . . .");
-			return null;
-		}
-	}
 
 	public String getCoffeeChoose(CoffeeType coffeeType) {
 		log.info("METHOD getCoffeeChoose - coffeeType {}", coffeeType.toString());
