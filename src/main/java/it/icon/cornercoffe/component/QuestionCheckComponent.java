@@ -1,16 +1,13 @@
 package it.icon.cornercoffe.component;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import it.icon.cornercoffe.pojo.CoffeeType;
-import it.icon.cornercoffe.pojo.QuestionPOJO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class QuestionComponent {
+public class QuestionCheckComponent {
 
 	private static final String ANSWER = "Not Found Answer ...";
 
@@ -165,17 +162,5 @@ public class QuestionComponent {
 		}
 		log.info("Status coffeeType {}", coffeeType.toString());
 		return coffeeType;
-	}
-	
-	public QuestionPOJO getNextQuestion(List<QuestionPOJO> questions) {
-		log.info("METHOD getNextQuestion - questions size {}", questions.size());
-		if (!questions.isEmpty()) {
-			QuestionPOJO nextQuestion = questions.get(0);
-			log.info("nextQuestion {}", nextQuestion);
-			return nextQuestion;
-		} else {
-			log.error("FINISH questions . . .");
-			return null;
-		}
 	}
 }

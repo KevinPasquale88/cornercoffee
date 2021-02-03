@@ -24,7 +24,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import it.icon.cornercoffe.component.CoffeeComponent;
-import it.icon.cornercoffe.component.QuestionComponent;
+import it.icon.cornercoffe.component.QuestionCheckComponent;
+import it.icon.cornercoffe.component.QuestionManageComponent;
 import it.icon.cornercoffe.pojo.CoffeeType;
 import it.icon.cornercoffe.pojo.JSONString;
 import it.icon.cornercoffe.pojo.QuestionPOJO;
@@ -42,20 +43,23 @@ public class CornercoffeeController {
 	KieContainer kContainer;
 
 	@Autowired
-	List<QuestionPOJO> questions;
-
-	@Autowired
 	CoffeeComponent coffeeComponent;
 
 	@Autowired
-	QuestionComponent questionComponent;
+	QuestionCheckComponent questionComponent;
+
+	@Autowired
+	QuestionManageComponent questionManageComponent;
+
+	@Autowired
+	List<QuestionPOJO> questions;
 
 	@GetMapping("/Description")
 	public ResponseEntity<String> getDescription(@RequestParam("coffeeName") String coffeeName)
 			throws JsonProcessingException {
 		log.info("METHOD getDescription - PATH GET /Description ATTRIBUTE - {}", coffeeName);
 		StringBuilder contentBuilder = new StringBuilder();
-		if(StringUtils.contains(coffeeName, "%")) {
+		if (StringUtils.contains(coffeeName, "%")) {
 			coffeeName = "Miscela";
 		}
 		String filePath = "src/main/resources/coffeeDescription/"
@@ -90,7 +94,7 @@ public class CornercoffeeController {
 			@RequestParam("answer") String answer) throws JsonProcessingException {
 		log.info("METHOD submitAnswer - questions {} - answer {}", question, answer);
 
-		Optional<QuestionPOJO> questionOption = questions.stream()
+		Optional<QuestionPOJO> questionOption = questionManageComponent.getQuestionsRemain().stream()
 				.filter(elem -> StringUtils.equalsIgnoreCase(elem.getQuestion(), question)).findAny();
 		CoffeeType coffeeType = null;
 
@@ -120,7 +124,7 @@ public class CornercoffeeController {
 				log.info("Also Answer finded . . .");
 				coffeeType = questionComponent.checkAnswers(elemQuestion.getQuestion(), answer);
 				// need to remove questionPojo
-				questions.remove(questionOption.get());
+				questionManageComponent.saveAnswer(questionOption.get(), answer);
 			}
 		}
 		if (coffeeType == null) {
@@ -134,7 +138,7 @@ public class CornercoffeeController {
 		if (StringUtils.isNotBlank(coffeeChoose)) {
 			return ResponseEntity
 					.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(coffeeChoose).build()));
-		} else if (questions.isEmpty()) {
+		} else if (questionManageComponent.isEmpty()) {
 			String blend = coffeeComponent.getBlend();
 			log.info("Don't found a specific type of coffee but a blend of this - blend {}", blend);
 			return ResponseEntity.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(blend).build()));
@@ -146,7 +150,7 @@ public class CornercoffeeController {
 
 	@GetMapping("/Question")
 	public ResponseEntity<QuestionPOJO> getQuestion() {
-		QuestionPOJO nextQuestionElement = questionComponent.getNextQuestion(questions);
+		QuestionPOJO nextQuestionElement = questionManageComponent.getNextQuestion();
 		if (nextQuestionElement != null) {
 			return ResponseEntity.ok(nextQuestionElement);
 		} else {
