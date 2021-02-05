@@ -6,54 +6,444 @@ global it.icon.cornercoffe.pojo.CoffeeChoose coffeeChoose;
 
 rule "Rules Giava"
 	salience 100
-	when $coffee:CoffeeType(body >= 90 , bitter >= 80,  acidity < 20, aroma <= 40, sweetness <= 50)
-	then coffeeChoose.setCoffee("Giava");
+	when
+		$l:List()
+		$p1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $l
+		$p2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2") from $l
+		$p3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $l
+		$p4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Macinato") from $l
+		$p5:AnswerPOJO(question == "Ti piace più persistente", answer == "No") from $l
+	then
+	coffeeChoose.setCoffee("Giava");	
 end
 
 rule "Rules India"
 	salience 100
-	when $coffee:CoffeeType(body >= 60 , bitter >= 80, acidity < 30, aroma <= 40, sweetness <= 50)
-	then coffeeChoose.setCoffee("India");
-end
-
-rule "Rules Brazil"
-	salience 100
-	when $coffee:CoffeeType(body >= 50 , bitter >= 50, acidity < 50, aroma <= 50, sweetness > 50)
-	then coffeeChoose.setCoffee("Brazil");
+	when
+		$l:List()
+		$p1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $l
+		$p2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2") from $l
+		$p3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $l
+		$p4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $l
+		$p5:AnswerPOJO(question == "Ti piace più persistente", answer == "No") from $l
+	then
+	coffeeChoose.setCoffee("India");	
 end
 
 rule "Rules Mexico"
 	salience 100
-	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness > 50)
-	then coffeeChoose.setCoffee("Mexico");
+	when
+		$l:List()
+		$p1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $l
+		$p2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $l
+		$p3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio") from $l
+		$p4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $l
+		$p5:AnswerPOJO(question == "Ti piace più persistente", answer == "Si") from $l
+	then
+	coffeeChoose.setCoffee("Mexico");	
+end
+
+rule "Rules Brazil"
+	salience 100
+	when
+		$l:List()
+		$p1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Filtro") from $l
+		$p2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2") from $l
+		$p3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $l
+		$p4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Macinato") from $l
+		$p5:AnswerPOJO(question == "Ti piace più persistente", answer == "No") from $l
+	then
+	coffeeChoose.setCoffee("Brazil");	
 end
 
 rule "Rules Kenya"
 	salience 100
-	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 70, aroma > 70, sweetness > 60)
-	then coffeeChoose.setCoffee("Kenya");
+	when
+		$l:List()
+		$p1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $l
+		$p2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $l
+		$p3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $l
+		$p4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $l
+		$p5:AnswerPOJO(question == "Ti piace più persistente", answer == "Si") from $l
+	then
+	coffeeChoose.setCoffee("Kenya");	
 end
 
 rule "Rules Honduras"
 	salience 100
-	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness <= 50)
-	then coffeeChoose.setCoffee("Honduras");
+	when
+		$l:List()
+		$p1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $l
+		$p2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $l
+		$p3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio") from $l
+		$p4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $l
+		$p5:AnswerPOJO(question == "Ti piace più persistente", answer == "Si") from $l
+	then
+	coffeeChoose.setCoffee("Honduras");	
 end
 
 rule "Rules Etiopia"
 	salience 100
+	when
+		$l:List()
+		$p1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $l
+		$p2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "5 o +") from $l
+		$p3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Sera") from $l
+		$p4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $l
+		$p5:AnswerPOJO(question == "Ti piace più persistente", answer == "Si") from $l
+	then
+	coffeeChoose.setCoffee("Etiopia");	
+end
+
+rule "Rules Giava Statistic"
+	salience 30
+	when $coffee:CoffeeType(body >= 90 , bitter >= 80,  acidity < 20, aroma <= 40, sweetness <= 50)
+	then coffeeChoose.setCoffee("Giava");
+end
+
+rule "Rules India Statistic"
+	salience 30
+	when $coffee:CoffeeType(body >= 60 , bitter >= 80, acidity < 30, aroma <= 40, sweetness <= 50)
+	then coffeeChoose.setCoffee("India");
+end
+
+rule "Rules Brazil Statistic"
+	salience 30
+	when $coffee:CoffeeType(body >= 50 , bitter >= 50, acidity < 50, aroma <= 50, sweetness > 50)
+	then coffeeChoose.setCoffee("Brazil");
+end
+
+rule "Rules Mexico Statistic"
+	salience 30
+	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness > 50)
+	then coffeeChoose.setCoffee("Mexico");
+end
+
+rule "Rules Kenya Statistic"
+	salience 30
+	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 70, aroma > 70, sweetness > 60)
+	then coffeeChoose.setCoffee("Kenya");
+end
+
+rule "Rules Honduras Statistic"
+	salience 30
+	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness <= 50)
+	then coffeeChoose.setCoffee("Honduras");
+end
+
+rule "Rules Etiopia Statistic"
+	salience 30
 	when $coffee:CoffeeType(body < 30, bitter < 50, acidity >= 80, aroma > 80, sweetness <= 40)
 	then coffeeChoose.setCoffee("Etiopia");
 end
 
 rule "Rules Arabica Percentage"
-	salience 10
+	salience 30
 	when $coffee:CoffeeType(body < 50, bitter < 50, acidity > 50, aroma > 50)
 	then coffeeChoose.moreArabica(10);
 end
 
 rule "Rules Robusta Percentage"
-	salience 10
+	salience 30
 	when $coffee:CoffeeType(body >= 50, bitter >= 50, acidity <= 50, aroma <= 50)
 	then coffeeChoose.moreRobusta(10);
+end
+
+rule "bitter yes"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Bevi il caffè amaro", answer == "Si") from $l
+		$coffee:CoffeeType($bi : bitter)
+	then
+		modify($coffee){
+			bitter = $bi + 20;
+		}
+		retract($answer);
+end
+
+rule "bitter no"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Bevi il caffè amaro", answer == "No") from $l
+		$coffee:CoffeeType($bi : bitter)
+	then 
+		modify($coffee){
+			bitter = $bi + 40;
+		}
+		retract($answer);
+end
+
+rule "energy yes"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Hai bisogno di energia", answer == "Si") from $l
+		$coffee:CoffeeType($bo: body)
+	then
+		modify($coffee){
+			body = $bo + 40;
+		}
+		retract($answer);
+end
+
+rule "energy no"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Hai bisogno di energia", answer == "No") from $l
+		$coffee:CoffeeType($bo : body)
+	then 
+		modify($coffee){
+			body = $bo + 10;
+		}
+		retract($answer);
+end
+
+rule "number coffee 1 2"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2") from $l
+		$coffee:CoffeeType($bo : body)
+	then
+		modify($coffee){
+			body = $bo + 50;
+		}
+		retract($answer);
+end
+
+rule "number coffee 3 4"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $l
+		$coffee:CoffeeType($bo : body)
+	then 
+		modify($coffee){
+			body = $bo + 30;
+		}
+		retract($answer);
+end
+
+rule "number coffee 5 o"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "5 o +") from $l
+		$coffee:CoffeeType($bo : body)
+	then 
+		modify($coffee){
+			body = $bo + 10;
+		}
+		retract($answer);
+end
+
+rule "morning moment"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $l
+		$coffee:CoffeeType($sw : sweetness)
+	then 
+		modify($coffee){
+			sweetness = $sw + 40;
+		}
+		retract($answer);
+end
+
+rule "afternoon moment"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio") from $l
+		$coffee:CoffeeType($sw : sweetness)
+	then 
+		modify($coffee){
+			sweetness = $sw + 30;
+		}
+		retract($answer);
+end
+
+rule "night moment"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Sera") from $l
+		$coffee:CoffeeType($sw : sweetness)
+	then 
+		modify($coffee){
+			sweetness = $sw + 20;
+		}
+		retract($answer);
+end
+
+rule "more smell yes"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Ti piace molto profumato", answer == "Si") from $l
+		$coffee:CoffeeType($ar : aroma)
+	then 
+		modify($coffee){
+			aroma = $ar + 50;
+		}
+		retract($answer);
+end
+
+rule "more smell no"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Ti piace molto profumato", answer == "No") from $l
+		$coffee:CoffeeType($ar : aroma)
+	then 
+		modify($coffee){
+			aroma = $ar + 25;
+		}
+		retract($answer);
+end
+
+rule "persistent yes"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Ti piace più persistente", answer == "Si") from $l
+		$coffee:CoffeeType($ar : aroma)
+	then 
+		modify($coffee){
+			aroma = $ar + 40;
+		}
+		retract($answer);
+end
+
+rule "persistent no"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Ti piace più persistente", answer == "No") from $l
+		$coffee:CoffeeType($ar : aroma)
+	then 
+		modify($coffee){
+			aroma = $ar + 20;
+		}
+		retract($answer);
+end
+
+rule "with sweet yes"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Lo accompagni con un dolce", answer == "Si") from $l
+		$coffee:CoffeeType($sw : sweetness)
+	then 
+		modify($coffee){
+			sweetness = $sw + 20;
+		}
+		retract($answer);
+end
+
+rule "with sweet no"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Lo accompagni con un dolce", answer == "No") from $l
+		$coffee:CoffeeType($sw : sweetness)
+	then 
+		modify($coffee){
+			sweetness = $sw + 40;
+		}
+		retract($answer);
+end
+
+rule "with milk yes"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Bevi con il latte", answer == "Si") from $l
+		$coffee:CoffeeType($ac : acidity)
+	then 
+		modify($coffee){
+			acidity = $ac + 50;
+		}
+		retract($answer);
+end
+
+rule "with milk no"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Bevi con il latte", answer == "No") from $l
+		$coffee:CoffeeType($ac : acidity)
+	then 
+		modify($coffee){
+			acidity = $ac + 10;
+		}
+		retract($answer);
+end
+
+rule "coffee state grani"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $l
+		$coffee:CoffeeType($ac : acidity)
+	then 
+		modify($coffee){
+			acidity = $ac + 40;
+		}
+		retract($answer);
+end
+
+rule "coffee state macinato"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Macinato") from $l
+		$coffee:CoffeeType($ac : acidity)
+	then 
+		modify($coffee){
+			acidity = $ac + 10;
+		}
+		retract($answer);
+end
+
+rule "coffee make tool moka"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $l
+		$coffee:CoffeeType($bi : bitter)
+	then
+		modify($coffee){
+			bitter = $bi + 10;
+		}
+		retract($answer);
+end
+
+rule "coffee make tool espresso"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $l
+		$coffee:CoffeeType($bi : bitter)
+	then
+		modify($coffee){
+			bitter = $bi + 30;
+		}
+		retract($answer);
+end
+
+rule "coffee make tool filtro"
+	salience 10
+	when
+		$l:List()
+		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Filtro") from $l
+		$coffee:CoffeeType($bi : bitter)
+	then
+		modify($coffee){
+			bitter = $bi + 20;
+		}
+		retract($answer);
 end

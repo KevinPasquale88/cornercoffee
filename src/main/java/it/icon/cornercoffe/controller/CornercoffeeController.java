@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.annotations.ApiOperation;
 import it.icon.cornercoffe.component.CoffeeComponent;
-import it.icon.cornercoffe.component.QuestionComponent;
 import it.icon.cornercoffe.pojo.CoffeeType;
 import it.icon.cornercoffe.pojo.JSONString;
 import it.icon.cornercoffe.pojo.QuestionPOJO;
@@ -47,15 +47,13 @@ public class CornercoffeeController {
 	@Autowired
 	CoffeeComponent coffeeComponent;
 
-	@Autowired
-	QuestionComponent questionComponent;
-
 	@GetMapping("/Description")
+	@ApiOperation(value = "Description of coffee that you request", response = String.class)
 	public ResponseEntity<String> getDescription(@RequestParam("coffeeName") String coffeeName)
 			throws JsonProcessingException {
 		log.info("METHOD getDescription - PATH GET /Description ATTRIBUTE - {}", coffeeName);
 		StringBuilder contentBuilder = new StringBuilder();
-		if(StringUtils.contains(coffeeName, "%")) {
+		if (StringUtils.contains(coffeeName, "%")) {
 			coffeeName = "Miscela";
 		}
 		String filePath = "src/main/resources/coffeeDescription/"
@@ -80,20 +78,20 @@ public class CornercoffeeController {
 	}
 
 	@GetMapping("/QuestionsList")
+	@ApiOperation(value = "Get list of all questions", response = List.class)
 	public ResponseEntity<List<QuestionPOJO>> getQuestions() {
 		log.info("METHOD getQuestions - questions size {}", questions.size());
 		return ResponseEntity.ok(questions);
 	}
 
 	@PostMapping("/SubmitAnswer")
+	@ApiOperation(value = "Submit the answer", response = String.class)
 	public ResponseEntity<String> submitAnswer(@RequestParam("question") String question,
 			@RequestParam("answer") String answer) throws JsonProcessingException {
 		log.info("METHOD submitAnswer - questions {} - answer {}", question, answer);
 
 		Optional<QuestionPOJO> questionOption = questions.stream()
 				.filter(elem -> StringUtils.equalsIgnoreCase(elem.getQuestion(), question)).findAny();
-		CoffeeType coffeeType = null;
-
 		if (!questionOption.isPresent()) {
 			log.error("ERROR ON QUESTION TO PASS . . . ");
 			return new ResponseEntity<String>(
@@ -118,19 +116,12 @@ public class CornercoffeeController {
 						HttpStatus.NOT_FOUND);
 			} else {
 				log.info("Also Answer finded . . .");
-				coffeeType = questionComponent.checkAnswers(elemQuestion.getQuestion(), answer);
+				coffeeComponent.updateKnowledge(elemQuestion.getQuestion(), answer);
 				// need to remove questionPojo
 				questions.remove(questionOption.get());
 			}
 		}
-		if (coffeeType == null) {
-			return new ResponseEntity<String>(
-					new ObjectMapper().writeValueAsString(
-							JSONString.builder().result("ERROR ON BUILD COFFEETYPE . . . ").build()),
-					HttpStatus.NOT_FOUND);
-		}
-		String coffeeChoose = coffeeComponent.getCoffeeChoose(coffeeType);
-
+		String coffeeChoose = coffeeComponent.getCoffeeChoose();
 		if (StringUtils.isNotBlank(coffeeChoose)) {
 			return ResponseEntity
 					.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(coffeeChoose).build()));
@@ -145,6 +136,7 @@ public class CornercoffeeController {
 	}
 
 	@GetMapping("/Question")
+	@ApiOperation(value = "Get the question to user", response = QuestionPOJO.class)
 	public ResponseEntity<QuestionPOJO> getQuestion() {
 		QuestionPOJO nextQuestionElement = coffeeComponent.getNextQuestion(questions);
 		if (nextQuestionElement != null) {
