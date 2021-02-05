@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.annotations.ApiOperation;
 import it.icon.cornercoffe.component.CoffeeComponent;
 import it.icon.cornercoffe.component.QuestionCheckComponent;
 import it.icon.cornercoffe.component.QuestionManageComponent;
@@ -55,6 +56,7 @@ public class CornercoffeeController {
 	List<QuestionPOJO> questions;
 
 	@GetMapping("/Description")
+	@ApiOperation(value = "Get Description About Coffee", response = String.class)
 	public ResponseEntity<String> getDescription(@RequestParam("coffeeName") String coffeeName)
 			throws JsonProcessingException {
 		log.info("METHOD getDescription - PATH GET /Description ATTRIBUTE - {}", coffeeName);
@@ -78,18 +80,21 @@ public class CornercoffeeController {
 	}
 
 	@GetMapping("/AvailabilityCoffee")
+	@ApiOperation(value = "Get Coffee Available", response = Map.class)
 	public ResponseEntity<Map<String, CoffeeType>> getAvailabilityCoffee() {
 		log.info("METHOD getAvailabilityCoffee - coffeTable size {}", coffeeTable.size());
 		return ResponseEntity.ok(coffeeTable);
 	}
 
 	@GetMapping("/QuestionsList")
+	@ApiOperation(value = "Get List of All Question", response = List.class)
 	public ResponseEntity<List<QuestionPOJO>> getQuestions() {
 		log.info("METHOD getQuestions - questions size {}", questions.size());
 		return ResponseEntity.ok(questions);
 	}
 
 	@PostMapping("/SubmitAnswer")
+	@ApiOperation(value = "Get Coffee", response = String.class)
 	public ResponseEntity<String> submitAnswer(@RequestParam("question") String question,
 			@RequestParam("answer") String answer) throws JsonProcessingException {
 		log.info("METHOD submitAnswer - questions {} - answer {}", question, answer);
@@ -149,6 +154,7 @@ public class CornercoffeeController {
 	}
 
 	@GetMapping("/Question")
+	@ApiOperation(value = "Get Next Question from User", response = QuestionPOJO.class)
 	public ResponseEntity<QuestionPOJO> getQuestion() {
 		QuestionPOJO nextQuestionElement = questionManageComponent.getNextQuestion();
 		if (nextQuestionElement != null) {
