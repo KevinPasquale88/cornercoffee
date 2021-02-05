@@ -26,6 +26,8 @@ public class CoffeeComponent {
 
 	List<AnswerPOJO> list = new ArrayList<AnswerPOJO>();
 
+	AnswerPOJO last = null;
+	
 	CoffeeChoose coffeeChoose = new CoffeeChoose();
 
 	CoffeeType coffeeType = new CoffeeType();
@@ -44,21 +46,24 @@ public class CoffeeComponent {
 	}
 
 	public void updateKnowledge(String question, String answer) {
-		list.add(new AnswerPOJO(question, answer));
+		last = new AnswerPOJO(question, answer);
+		list.add(last);
 	}
 
 	public String getCoffeeChoose() {
 		log.info("METHOD getCoffeeChoose - coffeeType {}", coffeeType.toString());
 		KieSession kieSession = kContainer.newKieSession();
 		kieSession.setGlobal("coffeeChoose", coffeeChoose);
-		kieSession.insert(list);
 		kieSession.insert(coffeeType);
+		kieSession.insert(list);
+		kieSession.insert(last);
 		try {
 			kieSession.fireAllRules();
 			kieSession.dispose();
 		} catch (Exception ex) {
 			log.error(ExceptionUtils.getMessage(ex));
 		}
+		log.info("coffeeType {}", coffeeType.toString());
 		if (StringUtils.isNotBlank(coffeeChoose.getCoffee())) {
 			log.info("FIND ! ! ! - coffee {}", coffeeChoose.getCoffee());
 			return coffeeChoose.getCoffee();
@@ -72,7 +77,7 @@ public class CoffeeComponent {
 	}
 
 	public String getBlend() {
-		return new StringBuilder("Miscela percentuali Arabica :").append(coffeeChoose.getPercentageArabica())
-				.append("%").append(" Robusta :").append(coffeeChoose.getPercentageRobusta()).append("%").toString();
+		return new StringBuilder("Miscela percentuali Arabica : ").append(coffeeChoose.getPercentageArabica())
+				.append("%").append(" Robusta : ").append(coffeeChoose.getPercentageRobusta()).append("%").toString();
 	}
 }
