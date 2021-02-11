@@ -7,7 +7,7 @@ global it.icon.cornercoffe.pojo.CoffeeChoose coffeeChoose;
 rule "Rules Giava"
 	salience 100
 	when
-		$list:List()
+		$list: List()
 		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2") from $list
 		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $list
@@ -72,7 +72,7 @@ end
 rule "Rules Honduras"
 	salience 100
 	when
-		$list: List()
+		$list:List()
 		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $list
 		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio") from $list
@@ -96,44 +96,44 @@ rule "Rules Etiopia"
 end
 
 rule "Rules Giava Statistic"
-	salience 30
-	when $coffee:CoffeeType(body >= 90 , bitter >= 80,  acidity < 20, aroma <= 40, sweetness <= 50)
+	salience 50
+	when $coffee:CoffeeType(body > 90 && body < 110 , bitter >= 70,  acidity <= 20, aroma < 50, sweetness >= 45 && sweetness < 60)
 	then coffeeChoose.setCoffee("Giava");
 end
 
 rule "Rules India Statistic"
-	salience 30
-	when $coffee:CoffeeType(body >= 60 , bitter >= 80, acidity < 30, aroma <= 40, sweetness <= 50)
+	salience 50
+	when $coffee:CoffeeType(body > 80 && body < 100 , bitter >= 70, acidity <= 20, aroma < 50, sweetness >= 45 && sweetness < 60)
 	then coffeeChoose.setCoffee("India");
 end
 
 rule "Rules Brazil Statistic"
-	salience 30
-	when $coffee:CoffeeType(body >= 50 , bitter >= 50, acidity < 50, aroma <= 50, sweetness > 50)
+	salience 50
+	when $coffee:CoffeeType(body > 50 && body <= 70, bitter >= 40 && bitter <= 65, acidity < 50 && acidity > 30, aroma < 60 && aroma >= 50, sweetness >= 80)
 	then coffeeChoose.setCoffee("Brazil");
 end
 
 rule "Rules Mexico Statistic"
-	salience 30
-	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness > 50)
+	salience 50
+	when $coffee:CoffeeType(body < 50 && body > 30, bitter < 40, acidity > 60 && acidity < 80 , aroma < 85 && aroma > 65, sweetness >= 60 && sweetness < 70)
 	then coffeeChoose.setCoffee("Mexico");
 end
 
 rule "Rules Kenya Statistic"
 	salience 30
-	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 70, aroma > 70, sweetness > 60)
+	when $coffee:CoffeeType(body < 50 && body > 30, bitter < 40, acidity >= 80, aroma >= 85, sweetness >= 70 && sweetness < 80)
 	then coffeeChoose.setCoffee("Kenya");
 end
 
 rule "Rules Honduras Statistic"
-	salience 30
-	when $coffee:CoffeeType(body < 50, bitter < 50, acidity >= 50, aroma > 50, sweetness <= 50)
+	salience 50
+	when $coffee:CoffeeType(body < 50 && body > 30, bitter < 40, acidity > 60 && acidity < 80, aroma < 85 && aroma > 65, sweetness >= 45 && sweetness < 60)
 	then coffeeChoose.setCoffee("Honduras");
 end
 
 rule "Rules Etiopia Statistic"
 	salience 30
-	when $coffee:CoffeeType(body < 30, bitter < 50, acidity >= 80, aroma > 80, sweetness <= 40)
+	when $coffee:CoffeeType(body < 30 && body > 10, bitter < 40, acidity >= 80, aroma >= 85, sweetness < 45)
 	then coffeeChoose.setCoffee("Etiopia");
 end
 
@@ -144,7 +144,7 @@ rule "bitter yes"
 		$coffee:CoffeeType($bi : bitter)
 	then
 		modify($coffee){
-			bitter = $bi + 20;
+			bitter = $bi + 15;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(10);
@@ -157,7 +157,7 @@ rule "bitter no"
 		$coffee:CoffeeType($bi : bitter)
 	then 
 		modify($coffee){
-			bitter = $bi + 40;
+			bitter = $bi + 50;
 		}
 		retract($answer);
 		coffeeChoose.moreRobusta(10);
@@ -170,7 +170,7 @@ rule "energy yes"
 		$coffee:CoffeeType($bo: body)
 	then
 		modify($coffee){
-			body = $bo + 40;
+			body = $bo + 65;
 		}
 		retract($answer);
 		coffeeChoose.moreRobusta(10);
@@ -183,7 +183,7 @@ rule "energy no"
 		$coffee:CoffeeType($bo : body)
 	then 
 		modify($coffee){
-			body = $bo + 10;
+			body = $bo + 15;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(10);
@@ -196,7 +196,7 @@ rule "number coffee 1 2"
 		$coffee:CoffeeType($bo : body)
 	then
 		modify($coffee){
-			body = $bo + 50;
+			body = $bo + 35;
 		}
 		retract($answer);
 		coffeeChoose.moreRobusta(10);
@@ -209,7 +209,7 @@ rule "number coffee 3 4"
 		$coffee:CoffeeType($bo : body)
 	then 
 		modify($coffee){
-			body = $bo + 30;
+			body = $bo + 25;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(5);
@@ -222,7 +222,7 @@ rule "number coffee 5 o"
 		$coffee:CoffeeType($bo : body)
 	then 
 		modify($coffee){
-			body = $bo + 10;
+			body = $bo + 5;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(10);
@@ -235,7 +235,7 @@ rule "morning moment"
 		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $sw + 40;
+			sweetness = $sw + 30;
 		}
 		retract($answer);
 		coffeeChoose.moreRobusta(10);
@@ -248,7 +248,7 @@ rule "afternoon moment"
 		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $sw + 30;
+			sweetness = $sw + 20;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(5);
@@ -261,7 +261,7 @@ rule "night moment"
 		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $sw + 20;
+			sweetness = $sw + 10;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(10);
@@ -274,7 +274,7 @@ rule "more smell yes"
 		$coffee:CoffeeType($ar : aroma)
 	then 
 		modify($coffee){
-			aroma = $ar + 50;
+			aroma = $ar + 60;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(10);
@@ -287,7 +287,7 @@ rule "more smell no"
 		$coffee:CoffeeType($ar : aroma)
 	then 
 		modify($coffee){
-			aroma = $ar + 25;
+			aroma = $ar + 20;
 		}
 		retract($answer);
 		coffeeChoose.moreRobusta(10);
@@ -300,7 +300,7 @@ rule "persistent yes"
 		$coffee:CoffeeType($ar : aroma)
 	then 
 		modify($coffee){
-			aroma = $ar + 40;
+			aroma = $ar + 35;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(10);
@@ -326,7 +326,7 @@ rule "with sweet yes"
 		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $sw + 20;
+			sweetness = $sw + 25;
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(10);
@@ -339,7 +339,7 @@ rule "with sweet no"
 		$coffee:CoffeeType($sw : sweetness)
 	then 
 		modify($coffee){
-			sweetness = $sw + 40;
+			sweetness = $sw + 50;
 		}
 		retract($answer);
 		coffeeChoose.moreRobusta(10);
@@ -404,23 +404,10 @@ rule "coffee make tool moka"
 		$coffee:CoffeeType($bi : bitter)
 	then
 		modify($coffee){
-			bitter = $bi + 10;
+			bitter = $bi + 15;
 		}
 		retract($answer);
 		coffeeChoose.moreRobusta(10);
-end
-
-rule "coffee make tool espresso"
-	salience 10
-	when
-		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso")
-		$coffee:CoffeeType($bi : bitter)
-	then
-		modify($coffee){
-			bitter = $bi + 30;
-		}
-		retract($answer);
-		coffeeChoose.moreRobusta(5);
 end
 
 rule "coffee make tool filtro"
@@ -434,4 +421,17 @@ rule "coffee make tool filtro"
 		}
 		retract($answer);
 		coffeeChoose.moreArabica(10);
+end
+
+rule "coffee make tool espresso"
+	salience 10
+	when
+		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso")
+		$coffee:CoffeeType($bi : bitter)
+	then
+		modify($coffee){
+			bitter = $bi + 25;
+		}
+		retract($answer);
+		coffeeChoose.moreRobusta(5);
 end

@@ -50,7 +50,7 @@ public class CoffeeComponent {
 		list.add(last);
 	}
 
-	public String getCoffeeChoose() {
+	public String getCoffeeChoose(boolean empty) {
 		log.info("METHOD getCoffeeChoose - coffeeType {}", coffeeType.toString());
 		KieSession kieSession = kContainer.newKieSession();
 		kieSession.setGlobal("coffeeChoose", coffeeChoose);
@@ -67,7 +67,7 @@ public class CoffeeComponent {
 		if (StringUtils.isNotBlank(coffeeChoose.getCoffee())) {
 			log.info("FIND ! ! ! - coffee {}", coffeeChoose.getCoffee());
 			return coffeeChoose.getCoffee();
-		} else if (list.size() == 10) {
+		} else if (empty) {
 			log.info("FIND A BLEND OF COFFEE ! ! ! - coffee {}", coffeeChoose.getCoffee());
 			return getBlend();
 		} else {

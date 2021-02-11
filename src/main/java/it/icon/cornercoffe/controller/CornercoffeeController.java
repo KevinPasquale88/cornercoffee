@@ -121,7 +121,7 @@ public class CornercoffeeController {
 				questions.remove(questionOption.get());
 			}
 		}
-		String coffeeChoose = coffeeComponent.getCoffeeChoose();
+		String coffeeChoose = coffeeComponent.getCoffeeChoose(questions.isEmpty());
 		if (StringUtils.isNotBlank(coffeeChoose)) {
 			return ResponseEntity
 					.ok(new ObjectMapper().writeValueAsString(JSONString.builder().result(coffeeChoose).build()));
