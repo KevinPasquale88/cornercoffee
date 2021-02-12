@@ -8,7 +8,7 @@
 		]
 	},
 	{
-		"question": "Ti piace molto profumato",
+		"question": "Ti piace più persistente",
 		"answers": [
 			"Si",
 			"No"
@@ -52,7 +52,7 @@
 		]
 	},
 	{
-		"question": "Ti piace più persistente",
+		"question": "Ti piace molto profumato",
 		"answers": [
 			"Si",
 			"No"

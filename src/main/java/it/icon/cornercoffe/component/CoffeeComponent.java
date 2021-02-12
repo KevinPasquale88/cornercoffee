@@ -1,7 +1,6 @@
 package it.icon.cornercoffe.component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +34,6 @@ public class CoffeeComponent {
 	public QuestionPOJO getNextQuestion(List<QuestionPOJO> questions) {
 		log.info("METHOD getNextQuestion - questions size {}", questions.size());
 		if (!questions.isEmpty()) {
-			Collections.shuffle(questions);
 			QuestionPOJO nextQuestion = questions.get(0);
 			log.info("nextQuestion {}", nextQuestion);
 			return nextQuestion;
