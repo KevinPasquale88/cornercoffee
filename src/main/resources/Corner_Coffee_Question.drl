@@ -96,49 +96,49 @@ rule "Rules Etiopia"
 end
 
 rule "Rules Giava Statistic"
-	salience 50
+	salience 10
 	when $coffee:CoffeeType(body > 90 && body < 110 , bitter >= 70,  acidity <= 20, aroma < 50, sweetness >= 45 && sweetness < 60)
 	then coffeeChoose.setCoffee("Giava");
 end
 
 rule "Rules India Statistic"
-	salience 50
+	salience 10
 	when $coffee:CoffeeType(body > 80 && body < 100 , bitter >= 70, acidity <= 20, aroma < 50, sweetness >= 45 && sweetness < 60)
 	then coffeeChoose.setCoffee("India");
 end
 
 rule "Rules Brazil Statistic"
-	salience 50
+	salience 10
 	when $coffee:CoffeeType(body > 50 && body <= 70, bitter >= 40 && bitter <= 65, acidity < 50 && acidity > 30, aroma < 60 && aroma >= 50, sweetness >= 80)
 	then coffeeChoose.setCoffee("Brazil");
 end
 
 rule "Rules Mexico Statistic"
-	salience 50
+	salience 10
 	when $coffee:CoffeeType(body < 50 && body > 30, bitter < 40, acidity > 60 && acidity < 80 , aroma < 85 && aroma > 65, sweetness >= 60 && sweetness < 70)
 	then coffeeChoose.setCoffee("Mexico");
 end
 
 rule "Rules Kenya Statistic"
-	salience 30
+	salience 10
 	when $coffee:CoffeeType(body < 50 && body > 30, bitter < 40, acidity >= 80, aroma >= 85, sweetness >= 70 && sweetness < 80)
 	then coffeeChoose.setCoffee("Kenya");
 end
 
 rule "Rules Honduras Statistic"
-	salience 50
+	salience 10
 	when $coffee:CoffeeType(body < 50 && body > 30, bitter < 40, acidity > 60 && acidity < 80, aroma < 85 && aroma > 65, sweetness >= 45 && sweetness < 60)
 	then coffeeChoose.setCoffee("Honduras");
 end
 
 rule "Rules Etiopia Statistic"
-	salience 30
+	salience 10
 	when $coffee:CoffeeType(body < 30 && body > 10, bitter < 40, acidity >= 80, aroma >= 85, sweetness < 45)
 	then coffeeChoose.setCoffee("Etiopia");
 end
 
 rule "bitter yes"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Bevi il caffè amaro", answer == "Si")
 		$coffee:CoffeeType($bi : bitter)
@@ -151,7 +151,7 @@ rule "bitter yes"
 end
 
 rule "bitter no"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Bevi il caffè amaro", answer == "No")
 		$coffee:CoffeeType($bi : bitter)
@@ -164,7 +164,7 @@ rule "bitter no"
 end
 
 rule "energy yes"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Hai bisogno di energia", answer == "Si")
 		$coffee:CoffeeType($bo: body)
@@ -177,7 +177,7 @@ rule "energy yes"
 end
 
 rule "energy no"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Hai bisogno di energia", answer == "No")
 		$coffee:CoffeeType($bo : body)
@@ -190,7 +190,7 @@ rule "energy no"
 end
 
 rule "number coffee 1 2"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2")
 		$coffee:CoffeeType($bo : body)
@@ -203,7 +203,7 @@ rule "number coffee 1 2"
 end
 
 rule "number coffee 3 4"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4")
 		$coffee:CoffeeType($bo : body)
@@ -216,7 +216,7 @@ rule "number coffee 3 4"
 end
 
 rule "number coffee 5 o"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "5 o +")
 		$coffee:CoffeeType($bo : body)
@@ -229,7 +229,7 @@ rule "number coffee 5 o"
 end
 
 rule "morning moment"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina")
 		$coffee:CoffeeType($sw : sweetness)
@@ -242,7 +242,7 @@ rule "morning moment"
 end
 
 rule "afternoon moment"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio")
 		$coffee:CoffeeType($sw : sweetness)
@@ -255,7 +255,7 @@ rule "afternoon moment"
 end
 
 rule "night moment"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Sera")
 		$coffee:CoffeeType($sw : sweetness)
@@ -268,7 +268,7 @@ rule "night moment"
 end
 
 rule "more smell yes"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Ti piace molto profumato", answer == "Si")
 		$coffee:CoffeeType($ar : aroma)
@@ -281,7 +281,7 @@ rule "more smell yes"
 end
 
 rule "more smell no"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Ti piace molto profumato", answer == "No")
 		$coffee:CoffeeType($ar : aroma)
@@ -294,7 +294,7 @@ rule "more smell no"
 end
 
 rule "persistent yes"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Ti piace più persistente", answer == "Si")
 		$coffee:CoffeeType($ar : aroma)
@@ -307,7 +307,7 @@ rule "persistent yes"
 end
 
 rule "persistent no"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Ti piace più persistente", answer == "No")
 		$coffee:CoffeeType($ar : aroma)
@@ -320,7 +320,7 @@ rule "persistent no"
 end
 
 rule "with sweet yes"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Lo accompagni con un dolce", answer == "Si")
 		$coffee:CoffeeType($sw : sweetness)
@@ -333,7 +333,7 @@ rule "with sweet yes"
 end
 
 rule "with sweet no"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Lo accompagni con un dolce", answer == "No")
 		$coffee:CoffeeType($sw : sweetness)
@@ -346,7 +346,7 @@ rule "with sweet no"
 end
 
 rule "with milk yes"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Bevi con il latte", answer == "Si")
 		$coffee:CoffeeType($ac : acidity)
@@ -359,7 +359,7 @@ rule "with milk yes"
 end
 
 rule "with milk no"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Bevi con il latte", answer == "No")
 		$coffee:CoffeeType($ac : acidity)
@@ -372,7 +372,7 @@ rule "with milk no"
 end
 
 rule "coffee state grani"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani")
 		$coffee:CoffeeType($ac : acidity)
@@ -385,7 +385,7 @@ rule "coffee state grani"
 end
 
 rule "coffee state macinato"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Macinato")
 		$coffee:CoffeeType($ac : acidity)
@@ -398,7 +398,7 @@ rule "coffee state macinato"
 end
 
 rule "coffee make tool moka"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka")
 		$coffee:CoffeeType($bi : bitter)
@@ -411,7 +411,7 @@ rule "coffee make tool moka"
 end
 
 rule "coffee make tool filtro"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Filtro")
 		$coffee:CoffeeType($bi : bitter)
@@ -424,7 +424,7 @@ rule "coffee make tool filtro"
 end
 
 rule "coffee make tool espresso"
-	salience 10
+	salience 50
 	when
 		$answer:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso")
 		$coffee:CoffeeType($bi : bitter)
