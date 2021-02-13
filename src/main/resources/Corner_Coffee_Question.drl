@@ -8,7 +8,7 @@ rule "Rules Giava"
 	salience 100
 	when
 		$list: List()
-		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $list
+		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2") from $list
 		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $list
 		$ans4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Macinato") from $list
@@ -21,7 +21,7 @@ rule "Rules India"
 	salience 100
 	when
 		$list: List()
-		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $list
+		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2") from $list
 		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $list
 		$ans4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $list
@@ -34,7 +34,7 @@ rule "Rules Mexico"
 	salience 100
 	when
 		$list: List()
-		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $list
+		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Filtro") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $list
 		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio") from $list
 		$ans4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $list
@@ -48,7 +48,7 @@ rule "Rules Brazil"
 	when
 		$list: List()
 		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Filtro") from $list
-		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "1-2") from $list
+		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $list
 		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $list
 		$ans4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Macinato") from $list
 		$ans5:AnswerPOJO(question == "Ti piace più persistente", answer == "No") from $list
@@ -60,9 +60,9 @@ rule "Rules Kenya"
 	salience 100
 	when
 		$list: List()
-		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $list
+		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $list
-		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Mattina") from $list
+		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio") from $list
 		$ans4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $list
 		$ans5:AnswerPOJO(question == "Ti piace più persistente", answer == "Si") from $list
 	then
@@ -73,7 +73,7 @@ rule "Rules Honduras"
 	salience 100
 	when
 		$list:List()
-		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $list
+		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $list
 		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio") from $list
 		$ans4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $list
@@ -86,7 +86,7 @@ rule "Rules Etiopia"
 	salience 100
 	when
 		$list: List()
-		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Espresso") from $list
+		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "5 o +") from $list
 		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Sera") from $list
 		$ans4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $list
