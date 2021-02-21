@@ -75,7 +75,7 @@ rule "Rules Honduras"
 		$list:List()
 		$ans1:AnswerPOJO(question == "Quale strumento utilizzi per il caffè", answer == "Moka") from $list
 		$ans2:AnswerPOJO(question == "Quanti caffè bevi normalmente in un giorno", answer == "3-4") from $list
-		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Pomeriggio") from $list
+		$ans3:AnswerPOJO(question == "In quale momento della giornata ci troviamo", answer == "Sera") from $list
 		$ans4:AnswerPOJO(question == "In che stato si trova il caffè", answer == "Grani") from $list
 		$ans5:AnswerPOJO(question == "Ti piace più persistente", answer == "Si") from $list
 	then
